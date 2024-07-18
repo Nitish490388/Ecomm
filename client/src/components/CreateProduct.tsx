@@ -18,6 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState } from "react";
+import axiosClient from "../utills/axiosClient";
+// import axios from "axios";
 
 interface FormDataType {
   title: string;
@@ -25,6 +27,7 @@ interface FormDataType {
   category: string;
   baseprice: number;
   discount?: number;
+  stock: number;
 }
 
 const CreateProduct = () => {
@@ -34,7 +37,8 @@ const CreateProduct = () => {
     description: "",
     category: "",
     baseprice: 0,
-    discount: 0
+    discount: 0,
+    stock: 1
   });
 
   const [images, setImages] = useState<string[]>([]);
@@ -53,7 +57,7 @@ const CreateProduct = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted");
     const data = {
@@ -61,6 +65,14 @@ const CreateProduct = () => {
       images
     };
     console.log(data);
+    try {
+      const respond = await axiosClient.post("/api/v1/admin/addProduct", data);
+      // const respond = await axios.post("http://localhost:8000/api/v1/admin/addProduct");
+      console.log(respond);
+    } catch (error) {
+      console.log(error);
+
+    }
 
   };
 
@@ -92,19 +104,19 @@ const CreateProduct = () => {
           >
             <div className="flex flex-col gap-2">
               <Label htmlFor="title">Title</Label>
-              <Input name="title" id="title" type="text" placeholder="Sunabesha of Triad"
+              <Input name="title" id="title" type="text" placeholder="Enter title"
                 onChange={handleChange}
               />
             </div>
 
             <div className="flex flex-col gap-2 mt-2">
               <Label htmlFor="description">Description</Label>
-              <Input type="text" name="description" id="description" onChange={handleChange} />
+              <Input type="text" name="description" id="description" placeholder="Write something about product" onChange={handleChange} />
             </div>
             <div className="md:flex md:justify-between md:items-center md:gap-2 mt-2">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="category">Category</Label>
-                <Select name="category" onValueChange={handleSelectChange}>
+                <Select name="category" onValueChange={handleSelectChange} >
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Category" />
                   </SelectTrigger>
@@ -129,18 +141,42 @@ const CreateProduct = () => {
                 <Input onChange={handleChange} type="number" name="discount" id="discount" placeholder="00%" />
               </div>
             </div>
-            <div className="flex flex-col gap-2 mt-2">
-              <Label htmlFor="images">Select images</Label>
-              <Input
-                onChange={handleImageChange}
-                type="file"
-                name="images"
-                id="images"
-                accept="image/jpeg, image/png, image/gif"
-                multiple
-              />
+            <div className="md:flex md:justify-between md:items-center md:gap-2 mt-2">
+              <div className="flex flex-col gap-2 mt-2">
+                <Label htmlFor="stock">Stock</Label>
+                <Input type="number" name="stock" id="stock" placeholder="00" onChange={handleChange} />
+              </div>
+              <div className="flex flex-col gap-2 mt-2">
+                <Label htmlFor="images">Select images</Label>
+                <Input
+                  onChange={handleImageChange}
+                  type="file"
+                  name="images"
+                  id="images"
+                  accept="image/jpeg, image/png, image/gif"
+                  multiple
+                />
+              </div>
             </div>
-            <Button type="submit" className="w-[150px]">Submit</Button>
+            <div className="md:flex md:justify-between md:items-center md:gap-2 mt-2">
+              <Button type="submit" className="w-[150px]">Submit</Button>
+              {
+                images.length > 0 ? <>
+                  <div className="w-[400px] h-[100px] flex items-center gap-2 overflow-x-scroll border-2 border-primary rounded-md p-2">
+                    {
+                      images?.map((image, i) => {
+                        return (
+                          <div key={i} className="h-full aspect-square">
+                            <img src={image} alt="product image" className="h-full" />
+                          </div>
+                        );
+                      })
+                    }
+                  </div>
+                </>
+                  :
+                  <></>}
+            </div>
           </form>
           {/* <div className="h-[100px]"></div> */}
         </CardContent>

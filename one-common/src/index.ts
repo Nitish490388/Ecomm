@@ -11,3 +11,15 @@ const signin = z.object({
   password: z.string()
 });
 
+export const addProduct = z.object({
+  title: z.string(),
+  description: z.string(),
+  category: z.string(),
+  baseprice: z.number(),
+  discount: z.number().optional(),
+  images: z.array(z.string()),
+});
+
+export type AddProductInputTypes = z.infer<typeof addProduct>;
+
+
