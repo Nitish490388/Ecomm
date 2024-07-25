@@ -3,6 +3,7 @@ import authRouter from "./routes/authRoutes";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import adminRouter from "./routes/adminRoutes";
+import appRouter from "./routes/appRouter";
 import cors from "cors";
 import "./config/cloudinaryConfig";
 
@@ -28,6 +29,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use("/api/v1/user", authRouter);
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/app", appRouter);
 
 app.listen(port, () => {
   console.log(`Server is listening on http://localhost:${PORT}`);

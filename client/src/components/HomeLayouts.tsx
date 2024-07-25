@@ -4,7 +4,7 @@ import Header from "./Header";
 
 const HomeLayouts = () => {
   return (
-    <div className="h-screen w-screen border-2 overflow-x-hidden border-blue-600 first-letter:select-none bg-background text-foreground">
+    <div className="h-screen w-screen overflow-x-hidden first-letter:select-none bg-background text-foreground">
       <Header />
       <div className="w-full ">
         <Outlet />

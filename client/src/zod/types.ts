@@ -13,6 +13,8 @@ export const signinInput = z.object({
 });
 
 export const productInput = z.object({
+  id: z.string().optional(),
+  createdAt: z.string().optional(),
   name: z.string(),
   descriptin: z.string(),
   category: z.string(),
@@ -20,4 +22,6 @@ export const productInput = z.object({
   discount: z.number(),
 
 })
+
+export type ProductTypes = z.infer<typeof productInput>;
 

@@ -5,6 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
 import { useState } from "react";
 import Drawer from "./Drawer";
+import ShoppingCart from "./ShoppingCart";
 
 const Header = () => {
 
@@ -23,6 +24,7 @@ const Header = () => {
         <CiSearch />
         <CiHeart />
         <CiBag1 />
+        {/* <ShoppingCart /> */}
       </div>
 
     </nav>
