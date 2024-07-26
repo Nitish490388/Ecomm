@@ -1,7 +1,7 @@
-import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { productIdAtom, appSingleProductQuery } from "@/store/appState";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useRecoilValueLoadable, useSetRecoilState, useRecoilState, useRecoilValue } from "recoil";
+import { productIdAtom, appSingleProductQuery, cartAtom, isAddedToCart } from "@/store/appState";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import ImageGallery from "@/components/ImageGallery";
 import ImageGalleryMobile from "@/components/ImageGalleryMobile";
 import { currentPrice } from "@/utills/calculation";
@@ -28,28 +28,18 @@ interface productType {
 
 const SingleProductPage = () => {
 
+  const navigate = useNavigate();
   const { id } = useParams();
   const setProductId2 = useSetRecoilState(productIdAtom);
   const productLoadable = useRecoilValueLoadable(appSingleProductQuery);
-
-
-  // console.log(productLoadable);
-
+  const [cartItem, setCartItem] = useRecoilState(cartAtom);
+  const inCart = useRecoilValue(isAddedToCart);
 
   useEffect(() => {
     if (id) {
       setProductId2(id);
     }
   }, [id, setProductId2]);
-
-
-
-  if (productLoadable.state === "loading") {
-    return <div>Loading...</div>
-  }
-  if (productLoadable.state === "hasError") {
-    return <div>Error in getting product. Please Reload this page!</div>
-  }
 
   const imgArray: string[] = [];
   let price;
@@ -61,8 +51,29 @@ const SingleProductPage = () => {
     price = currentPrice(productData.basePrice, productData.discountPercentage);
   }
 
+  function addItemToCart(product: productType) {
+    const oldCartItem = [...cartItem];
+    const newCartItem = [product, ...oldCartItem];
+    setCartItem(newCartItem);
+  }
+
+  const handleAddtoCart = () => {
+    console.log("added to cart");
+    if (productLoadable.state === "hasValue")
+      addItemToCart(productLoadable.contents.data);
+  }
+
+  if (productLoadable.state === "loading") {
+    return <div>Loading...</div>
+  }
+
+  if (productLoadable.state === "hasError") {
+    return <div>Error in getting product. Please Reload this page!</div>
+  }
+
+
   return (
-    <div className="dark w-full relative bg-background text-foreground">
+    <div className=" w-full relative bg-background text-foreground">
       <div className="w-full flex flex-col md:flex-row gap-5">
         <div className="bg-card md:hidden">
           <ImageGalleryMobile images={imgArray} />
@@ -80,7 +91,19 @@ const SingleProductPage = () => {
           <div>Dimensions : H: 24 (in) by W: 36 (in)</div>
           <div className=" md:pb-10">Medium : Natural Colors on Canvas</div>
           <div className="hidden w-full md:w-[300px] md:flex flex-col gap-4 bottom-1">
-            <Button>Add to Cart</Button>
+
+            {
+              inCart ?
+                <>
+                  <Button onClick={() => {
+                    navigate("/viewcart")
+                  }} variant="outline">Go to cart</Button>
+                </>
+                :
+                <>
+                  <Button onClick={handleAddtoCart}>Add to Cart</Button>
+                </>
+            }
             <Button variant="secondary">Talk to our Art Expert</Button>
           </div>
           <div className="w-full mt-5">
@@ -92,7 +115,18 @@ const SingleProductPage = () => {
         </div>
         <div className="fixed w-full bottom-1 md:hidden px-3">
           <div className=" w-full flex flex-col ">
-            <Button>Add to Cart</Button>
+            {
+              inCart ?
+                <>
+                  <Button onClick={() => {
+                    navigate("/viewcart")
+                  }} variant="outline">Go to cart</Button>
+                </>
+                :
+                <>
+                  <Button onClick={handleAddtoCart}>Add to Cart</Button>
+                </>
+            }
             <Button variant="secondary">Talk to our Art Expert</Button>
           </div>
         </div>

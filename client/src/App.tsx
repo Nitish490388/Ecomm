@@ -10,6 +10,7 @@ import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import AdminAllProducts from "./pages/AdminAllProducts";
 import SingleProductPage from "./pages/SingleProductPage";
+import CartPage from "./pages/CartPage";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<LogIn />} />
           <Route path="/product/:id" element={<SingleProductPage />} />
+          <Route path="/viewcart" element={<CartPage />} />
 
         </Route>
         <Route element={<DashboardLayout />}>
