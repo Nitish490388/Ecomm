@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import AdminAllProducts from "./pages/AdminAllProducts";
 import SingleProductPage from "./pages/SingleProductPage";
 import CartPage from "./pages/CartPage";
+import Checkout from "./pages/Checkout";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signin" element={<LogIn />} />
           <Route path="/product/:id" element={<SingleProductPage />} />
           <Route path="/viewcart" element={<CartPage />} />
+          <Route path="/checkout" element={<Checkout />} />
 
         </Route>
         <Route element={<DashboardLayout />}>

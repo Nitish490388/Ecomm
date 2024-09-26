@@ -1,12 +1,62 @@
-import { atom, selector } from "recoil";
+import { atom, selector, atomFamily } from "recoil";
 import { recoilPersist } from 'recoil-persist'
 import axiosClient from "@/utills/axiosClient";
+import { currentPrice } from "@/utills/calculation";
+
+interface pic {
+  productId: string;
+  publicId: string;
+  url: string;
+}
+
+interface productType {
+  id: string;
+  createdAt: string;
+  name: string;
+  description: string;
+  categoryName: string;
+  basePrice: number;
+  discountPercentage: number;
+  stock: number;
+  picture: pic[];
+}
 
 const { persistAtom } = recoilPersist({
   key: 'recoil-persist', // this key is using to store data in local storage
   storage: localStorage, // configure which storage will be used to store the data
   converter: JSON // configure how values will be serialized/deserialized in storage
 })
+
+export const checkoutPrice = selector({
+  key: "checkoutPriceAtom",
+  get: ({ get }) => {
+
+    const items: productType[] = get(cartAtom);
+
+    let totalBasePrice: number = 0;
+    let totalDiscount: number = 0;
+    let totalAmount: number = 0;
+    items.forEach(element => {
+      const x = get(quantityCounterFamily(element.id));
+      const currPrice = currentPrice(element.basePrice, element.discountPercentage);
+      const discount = element.basePrice - currPrice;
+      totalBasePrice += x * Number(element.basePrice);
+      totalDiscount += x * discount;
+      totalAmount += x * currPrice;
+    });
+
+    return {
+      totalBasePrice,
+      totalDiscount,
+      totalAmount
+    }
+  }
+});
+
+export const quantityCounterFamily = atomFamily({
+  key: 'quantityCounterFamily',
+  default: 1,
+});
 
 export const cartAtom = atom({
   key: "cart",
@@ -42,23 +92,6 @@ export const appSingleProductQuery = selector({
   }
 })
 
-interface pic {
-  productId: string;
-  publicId: string;
-  url: string;
-}
-
-interface productType {
-  id: string;
-  createdAt: string;
-  name: string;
-  description: string;
-  categoryName: string;
-  basePrice: number;
-  discountPercentage: number;
-  stock: number;
-  picture: pic[];
-}
 
 function isEqual(id: string, objs: productType[]): boolean {
   return objs.some(item => item.id === id);

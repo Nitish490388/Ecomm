@@ -14,30 +14,56 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String     @id @default(uuid())
+  email     String     @unique
   password  String
   name      String?
-  address   String?
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-
-  // Purchase   Purchase[]
+  role      Role       @default(USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  Purchase  Purchase[]
+  address   Address[]
 }
 
 model Product {
-  id                 String   @id @default(uuid())
-  name               String   @unique
+  id                 String     @id @default(uuid())
+  name               String     @unique
   picture            Images[]
   basePrice          Decimal
-  discountPercentage Int      @default(0)
-  stock              Int      @default(0)
+  discountPercentage Int        @default(0)
+  stock              Int        @default(0)
   description        String?
-  createdAt          DateTime @default(now())
-  category           Category @relation(fields: [categoryName], references: [name])
+  createdAt          DateTime   @default(now())
+  category           Category   @relation(fields: [categoryName], references: [name])
   categoryName       String
-  // Purchase           Purchase[]
+  purchase           Purchase[]
+}
+
+model Purchase {
+  id          String    @id @default(uuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  product     Product   @relation(fields: [productId], references: [id])
+  productId   String
+  quantity    Int
+  totalPrice  Decimal
+  purchasedAt DateTime  @default(now())
+  address     Address[]
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  purchaseId String
+  purchase   Purchase @relation(fields: [purchaseId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  name       String
+  phone      String
+  address    String
+  district   String
+  state      String
+  landmark   String
+  altPhone   String
 }
 
 model Images {
@@ -56,4 +82,10 @@ model Category {
 enum Role {
   USER
   ADMIN
+}
+
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  CANCELED
 }

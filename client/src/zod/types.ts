@@ -25,3 +25,14 @@ export const productInput = z.object({
 
 export type ProductTypes = z.infer<typeof productInput>;
 
+export const AddressInput = z.object({
+  name: z.string(),
+  phone: z.string(),
+  pincode: z.string(),
+  address: z.string(),
+  state: z.string(),
+  landmark: z.string(),
+  altPhone: z.string().optional(),
+});
+
+export type AddressInputType = z.infer<typeof AddressInput>;
