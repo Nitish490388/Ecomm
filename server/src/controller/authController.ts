@@ -11,6 +11,8 @@ const prisma = new PrismaClient();
 const signupController = async (req: Request, res: Response) => {
   try {
     const body = req.body;
+    console.log(body);
+    
     const validation = signupInput.safeParse(body);
 
     if (!validation.success) {
@@ -33,7 +35,14 @@ const signupController = async (req: Request, res: Response) => {
     const token = jwt.sign({ id: user.id, email: user.email }, jwt_secret, {
       expiresIn: "3d",
     });
-    console.log(body);
+
+    res.cookie("token", token, {
+      // path: "/",
+      // sameSite: "lax",
+      // httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 24 * 60 * 60 * 3),
+    });
+    
     return res.send(success(200, { token }));
   } catch (err) {
     console.log(err);
@@ -71,7 +80,16 @@ const signinController = async (req: Request, res: Response) => {
     const token = jwt.sign({ id: existingUser.id, email: existingUser.email }, jwt_secret, {
       expiresIn: "3d"
     });
+    
+    res.cookie("token", token, {
+      // path: "/",
+      // sameSite: "lax",
+      // httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 24 * 60 * 60 * 3),
+    });
+
     return res.send(success(200, { token }));
+
   } catch (err) {
     console.log(err);
     return res.send(error(500, "error occured"));

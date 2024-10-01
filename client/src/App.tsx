@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home";
 import Trial from "./pages/Trial";
 import HomeLayouts from "./components/HomeLayouts";
-import { LogIn } from "lucide-react";
+import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import DashboardLayout from "./components/DashboardLayout";
 import CreateProduct from "./components/CreateProduct";
@@ -12,6 +12,7 @@ import AdminAllProducts from "./pages/AdminAllProducts";
 import SingleProductPage from "./pages/SingleProductPage";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
+import RestrictedUser from "./components/RestrictedUser";
 
 function App() {
 
@@ -22,11 +23,13 @@ function App() {
         <Route element={<HomeLayouts />}>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<LogIn />} />
+          <Route path="/signin" element={<Signin />} />
           <Route path="/product/:id" element={<SingleProductPage />} />
           <Route path="/viewcart" element={<CartPage />} />
-          <Route path="/checkout" element={<Checkout />} />
-
+          <Route element={<RestrictedUser/>}>
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
+          
         </Route>
         <Route element={<DashboardLayout />}>
 

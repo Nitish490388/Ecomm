@@ -156,7 +156,12 @@ const Checkout = () => {
               <span className="font-semibold">₹{checkout.totalAmount}</span>
             </div>
             <div className="text-green-600 ">
-              You will save ₹9,300 on this order
+              {/* You will save ₹9,300 on this order */}
+              <Button onClick={async() => {
+                const response = await axiosClient.get("/api/v1/app/getUser");
+                console.log(response);
+                
+              }}>click</Button>
             </div>
           </div>
         </div>

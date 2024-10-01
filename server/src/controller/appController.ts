@@ -28,6 +28,15 @@ interface checkoutData extends productType {
   quantity: number
 }
 
+const getUserDetails  = async (req:Request, res: Response) => {
+  try {
+
+    return res.send(success(200, { data: "data" }));
+  } catch (err) {
+    console.log(err);
+    return res.send(error(500, "Error Happend"));
+  }
+}
 
 const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -108,6 +117,7 @@ const placeorder = async (req: Request, res: Response) => {
 }
 
 export {
+  getUserDetails,
   getAllProducts,
   getSingleProduct,
   getFilteredProducts,

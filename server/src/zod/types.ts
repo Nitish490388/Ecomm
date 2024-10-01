@@ -3,7 +3,8 @@ import z from "zod";
 export const signupInput = z.object({
   name: z.string().optional(),
   email: z.string().email(),
-  password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+  password: z.string(),
+  confirmPassword: z.string()
 });
 
 export const signinInput = z.object({
