@@ -22,6 +22,14 @@ interface productType {
   picture: pic[];
 }
 
+export const getUserQuerry = selector({
+  key: 'getUser',
+  get: async () => {
+    const response = await axiosClient.get("/api/v1/app/getUser");
+    return response.data.result;
+  },
+});
+
 const { persistAtom } = recoilPersist({
   key: 'recoil-persist', // this key is using to store data in local storage
   storage: localStorage, // configure which storage will be used to store the data

@@ -13,6 +13,6 @@ const routes = express.Router();
 routes.get("/getUser", verifyToken, getUserDetails);
 routes.get("/getAllPRoducts", getAllProducts);
 routes.get("/getSingleProduct/:id", getSingleProduct);
-routes.post("/placeorder", placeorder);
+routes.post("/placeorder", verifyToken, placeorder);
 
 export default routes;

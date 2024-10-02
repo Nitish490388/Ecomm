@@ -28,10 +28,26 @@ interface checkoutData extends productType {
   quantity: number
 }
 
+interface AddressDataType {
+  userId: string;
+  name: string;
+  phone: string;
+  address: string;
+  district: string;
+  state: string;
+  landmark: string;
+  altPhone: string;
+}
+
 const getUserDetails  = async (req:Request, res: Response) => {
   try {
-
-    return res.send(success(200, { data: "data" }));
+    const id = req.userId;
+    const user = await prisma.user.findFirst({
+      where: {
+        id
+      }
+    })
+    return res.send(success(200, { data: user }));
   } catch (err) {
     console.log(err);
     return res.send(error(500, "Error Happend"));
@@ -82,34 +98,36 @@ const getFilteredProducts = async (req: Request, res: Response) => {
 
 const placeorder = async (req: Request, res: Response) => {
   try {
-    const data: checkoutData[] = req.body;
-    const addressData = {
-      userId: "dsd",
-      name: "John Doe",
-      phone: "1234567890",
-      address: "123 Main St",
-      district: "Downtown",
-      state: "California",
-      landmark: "Near Park",
-      altPhone: "0987654321"
-    };
-    data.forEach(async (item) => {
+    const items: checkoutData[] = req.body.items;
+    const addressData: AddressDataType = req.body.address;
+    const userId: string = req.userId as string;
+
+    const createdAddress = await prisma.address.create({
+      data: {
+        userId,
+        name: addressData.name,
+        phone: addressData.phone,
+        address: addressData.address,
+        district: addressData.district,
+        state: addressData.state,
+        landmark: addressData.landmark,
+        altPhone: addressData.altPhone,
+      },
+    });
+
+    items.forEach(async (item) => {
       const price = currentPrice(item.basePrice, item.discountPercentage);
       const purchase = await prisma.purchase.create({
         data: {
-          userId: "ewe",
+          userId,
           productId: item.id,
           quantity: item.quantity,
           totalPrice: price,
-          address: {
-            create: {
-              ...addressData
-            }
-          },
-        }
+          addressId: createdAddress.id, 
+        },
       });
     });
-    return res.send(success(200, { data }));
+    return res.send(success(200, {result: "Order placed"}));
   } catch (err) {
     console.log(err);
     return res.send(error(500, "Error Happend"));

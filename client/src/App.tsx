@@ -13,6 +13,7 @@ import SingleProductPage from "./pages/SingleProductPage";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
 import RestrictedUser from "./components/RestrictedUser";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/viewcart" element={<CartPage />} />
           <Route element={<RestrictedUser/>}>
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/profile" element={<Profile/>}/>
           </Route>
           
         </Route>

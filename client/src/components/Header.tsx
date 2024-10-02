@@ -21,7 +21,9 @@ const Header = () => {
       <Drawer isOpen={isDrawerOpen} onClose={handleDrawerToggle} />
       <h3>Logo</h3>
       <div className="flex items-center gap-4 text-2xl md:text-3xl font-thin py-3 md:py-5">
-        <CiUser />
+        <CiUser onClick={() => {
+          navigate("/profile");
+        }}/>
         <CiSearch />
         <CiHeart />
         <CiBag1 onClick={() => {

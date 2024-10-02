@@ -98,10 +98,13 @@ const signinController = async (req: Request, res: Response) => {
 
 const logoutController = async (req: Request, res: Response) => {
   try {
-    return res.send(success(200, { msg: "ok from logout" }));
+    res.clearCookie("token");
+    req.session = null;
+    
+    return res.send(success(200, { msg: "user logged out successfully" }));
   } catch (err) {
     console.log(err);
-    return res.send(error(500, "error occured"));
+    return res.send(error(500, "Error in logging out"));
   }
 }
 

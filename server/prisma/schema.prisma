@@ -48,13 +48,12 @@ model Purchase {
   quantity    Int
   totalPrice  Decimal
   purchasedAt DateTime  @default(now())
-  address     Address[]
+  address     Address   @relation(fields: [addressId], references: [id])
+  addressId   String
 }
 
 model Address {
   id         String   @id @default(uuid())
-  purchaseId String
-  purchase   Purchase @relation(fields: [purchaseId], references: [id])
   userId     String
   user       User     @relation(fields: [userId], references: [id])
   name       String
@@ -62,8 +61,9 @@ model Address {
   address    String
   district   String
   state      String
-  landmark   String
-  altPhone   String
+  landmark   String?
+  altPhone   String?
+  purchases  Purchase[]
 }
 
 model Images {

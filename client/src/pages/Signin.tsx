@@ -35,7 +35,7 @@ const Signin: React.FC = () => {
      email, password, 
     });
     console.log(response.data);
-    
+    navigate(-1);
   };
 
   return (

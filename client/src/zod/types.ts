@@ -26,13 +26,24 @@ export const productInput = z.object({
 export type ProductTypes = z.infer<typeof productInput>;
 
 export const AddressInput = z.object({
-  name: z.string(),
-  phone: z.string(),
-  pincode: z.string(),
-  address: z.string(),
-  state: z.string(),
-  landmark: z.string(),
-  altPhone: z.string().optional(),
+  name: z.string().min(1, { message: "Name is required" }),
+  phone: z
+    .string()
+    .min(10, { message: "Phone number must be at least 10 digits" })
+    .max(10, { message: "Phone number must not exceed 10 digits" })
+    .regex(/^[0-9]+$/, { message: "Phone number must contain only digits" }),
+  locality: z.string().min(1, { message: "Locality is required" }),
+  district: z.string().min(1, { message: "District is required" }),
+  pincode: z
+    .string()
+    .length(6, { message: "Pincode must be exactly 6 digits" })
+    .regex(/^[0-9]+$/, { message: "Pincode must contain only digits" }),
+  address: z.string().min(1, { message: "Address is required" }),
+  state: z.string().min(1, { message: "State is required" }),
+  landmark: z.string().min(1, { message: "Landmark is required" }),
+  altPhone: z
+    .string()
+    .optional()
 });
 
 export type AddressInputType = z.infer<typeof AddressInput>;
