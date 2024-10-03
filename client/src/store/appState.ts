@@ -22,6 +22,15 @@ interface productType {
   picture: pic[];
 }
 
+export const userAtom = atom({
+  key: 'userAtom',
+  default: {
+    name: "",
+    email: "",
+    role: ""
+  }, 
+});
+
 export const getUserQuerry = selector({
   key: 'getUser',
   get: async () => {

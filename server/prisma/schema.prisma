@@ -48,9 +48,12 @@ model Purchase {
   quantity    Int
   totalPrice  Decimal
   purchasedAt DateTime  @default(now())
-  address     Address   @relation(fields: [addressId], references: [id])
+  address     Address   @relation(fields: [addressId], references: [id]) 
   addressId   String
+  
 }
+
+
 
 model Address {
   id         String   @id @default(uuid())
@@ -63,6 +66,7 @@ model Address {
   state      String
   landmark   String?
   altPhone   String?
+  status     PurchaseStatus  @default(PENDING)
   purchases  Purchase[]
 }
 
@@ -89,3 +93,4 @@ enum PurchaseStatus {
   COMPLETED
   CANCELED
 }
+

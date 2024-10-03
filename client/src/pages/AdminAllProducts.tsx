@@ -21,7 +21,6 @@ import { Button } from "@/components/ui/button"
 
 const AdminProducts = () => {
   const productsLoadable = useRecoilValueLoadable(allProductsQuerry);
-  console.log(productsLoadable);
 
   if (productsLoadable.state == "loading")
     return (
@@ -99,7 +98,7 @@ const AdminProducts = () => {
     },
   ]
   return (
-    <div className="dark border border-red-600 h-screen bg-background text-foreground">
+    <div className="border border-red-600 h-screen bg-background text-foreground">
       <h1 className="font-bold bg-accent text-2xl text-accent-foreground p-4">
         Products
       </h1>

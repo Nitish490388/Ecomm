@@ -33,7 +33,7 @@ const ProfilePage: React.FC = () => {
           <p>
             <strong>Email:</strong> {user.email}
           </p>
-          <Button onClick={handleLogout}>logout</Button>
+          <Button variant={"outline"} onClick={handleLogout}>logout</Button>
         </div>
       )}
       

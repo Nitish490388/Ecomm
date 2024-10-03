@@ -8,6 +8,41 @@ import z from "zod";
 
 const prisma = new PrismaClient();
 
+const createAdmin = async(req: Request, res: Response) => {
+  try {
+    const {name, email, password, role} = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const admin = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role
+      }
+    })
+
+    const jwt_secret: string = process.env.JWT_ACCESS_SECRET || "";
+    const token = jwt.sign({ id: admin.id, email: admin.email }, jwt_secret, {
+      expiresIn: "3d",
+    });
+
+    res.cookie("token", token, {
+      // path: "/",
+      // sameSite: "lax",
+      // httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 24 * 60 * 60 * 3),
+    });
+    
+    return res.send(success(200, { token }));
+
+  } catch (err) {
+    console.log(err);
+    
+    return res.send(error(500, "Error  happend"));
+  }
+}
+
 const signupController = async (req: Request, res: Response) => {
   try {
     const body = req.body;
@@ -111,5 +146,6 @@ const logoutController = async (req: Request, res: Response) => {
 export {
   signinController,
   signupController,
-  logoutController
+  logoutController,
+  createAdmin
 }

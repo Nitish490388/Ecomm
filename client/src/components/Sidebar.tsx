@@ -50,59 +50,8 @@ const Sidebar = () => {
               </li>
             ))
           }
-
-
-          {/* <li>
-            <Link to="/admin/allProducts">
-              <div className="flex items-center justify-items-start space-x-3">
-                <div >
-                  <RiHomeGearLine />
-                </div>
-                <h3>Dashboard</h3>
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin/allProducts">
-              <div className="flex items-center justify-items-start space-x-3">
-                <div >
-                  <MdChecklist />
-                </div>
-                <h3>Orders</h3>
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin/allProducts">
-              <div className="flex items-center justify-items-start space-x-3">
-                <div >
-                  < RiHomeGearLine />
-                </div>
-                <h3>Products</h3>
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin/allProducts">
-              <div className="flex items-center justify-items-start space-x-3">
-                <div >
-                  <RiHomeGearLine />
-                </div>
-                <h3>Rates</h3>
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin/allProducts">
-              <div className="flex items-center justify-items-start space-x-3">
-                <div >
-                  <LuFileSpreadsheet />
-                </div>
-                <h3>Reports</h3>
-              </div>
-            </Link>
-          </li> */}
         </ul>
+        
       </div>
     </div>
   );

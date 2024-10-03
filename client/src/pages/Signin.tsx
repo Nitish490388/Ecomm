@@ -34,8 +34,9 @@ const Signin: React.FC = () => {
     const response = await axiosClient.post("/api/v1/user/signin", {
      email, password, 
     });
+   
     console.log(response.data);
-    navigate(-1);
+    navigate("/");
   };
 
   return (
