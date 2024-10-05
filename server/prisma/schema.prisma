@@ -50,7 +50,7 @@ model Purchase {
   purchasedAt DateTime  @default(now())
   address     Address   @relation(fields: [addressId], references: [id]) 
   addressId   String
-  
+  status     PurchaseStatus  @default(PENDING)
 }
 
 
@@ -66,7 +66,6 @@ model Address {
   state      String
   landmark   String?
   altPhone   String?
-  status     PurchaseStatus  @default(PENDING)
   purchases  Purchase[]
 }
 
@@ -91,6 +90,6 @@ enum Role {
 enum PurchaseStatus {
   PENDING
   COMPLETED
-  CANCELED
+  CANCELLED
 }
 

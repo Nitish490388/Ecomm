@@ -16,6 +16,8 @@ import RestrictedUser from "./components/RestrictedUser";
 import Profile from "./pages/Profile";
 import RestrictAdmin from "./components/RestrictAdmin";
 import UserComponent from "./components/userComponent";
+import AdminAllOrders from "./pages/AdminAllOrders";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
           <Route element={<RestrictedUser />}>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/myorders" element={<MyOrders />} />
           </Route>
         </Route>
 
@@ -39,6 +42,7 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/create-product" element={<CreateProduct />} />
             <Route path="/admin/allProducts" element={<AdminAllProducts />} />
+            <Route path="/admin/allOrders" element={<AdminAllOrders />} />
           </Route>
         </Route>
         <Route path="*" element={<Notfound />}></Route>

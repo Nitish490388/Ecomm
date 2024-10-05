@@ -7,9 +7,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="w-full h-full flex items-center justify-center">
-        <Button onClick={() => {
-          navigate("/admin/create")
-        }}>Create Product</Button>
+        <h1 className="text-primary text-[60px] font-bold">Welcome to Dashboard!!</h1>
       </div>
     </>
   );

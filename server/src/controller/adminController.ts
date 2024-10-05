@@ -15,6 +15,85 @@ interface AddProductInputDataType {
   images: string[]
 }
 
+const markDelivered = async (req: Request, res: Response) => {
+  try {
+    const purchaseId = req.params.id;
+
+    const purchase = await prisma.purchase.findUnique({
+      where: {
+        id: purchaseId,
+      }
+    });
+    console.log(purchaseId);
+    
+
+    if(purchase?.status === "CANCELLED") {
+      return res.send(error(404, "cant be marked "));
+    }
+
+    const updatedPurchase = await prisma.purchase.update({
+      where: {
+        id: purchaseId, 
+      },
+      data: {
+        status: "COMPLETED", 
+      },
+    });
+    return res.send(success(200, {data: purchaseId}));
+  } catch (err) {
+    console.log(err);
+    return res.send(error(500, "Error Happend"));
+  }
+}
+
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const allOrders = await prisma.purchase.findMany({
+      select: {
+        id: true,
+        quantity: true,
+        totalPrice: true,
+        status: true,
+        user: {
+          select: {
+            email: true,
+          },
+        },
+        product: {
+          select: {
+            picture: {
+              select: {
+                url: true, 
+              },
+            },
+          },
+        },
+        address: {
+          select: {
+            address: true,
+          },
+        },
+      },
+    });
+    
+    const simplifiedOrders = allOrders.map(order => ({
+      purchaseId: order.id,
+      productImage: order.product.picture.length > 0 ? order.product.picture[0].url : null, // assumes one image per product
+      userEmail: order.user.email,
+      totalPrice: order.totalPrice,
+      quantity: order.quantity,
+      userAddress: order.address.address,
+      status: order.status
+    }));
+
+    return res.send(success(200, { data: simplifiedOrders }));
+  } catch (err) {
+    console.log(err);
+    return res.send(error(500, "Error Happened"));
+  }
+};
+
+
 const addProduct = async (req: Request, res: Response) => {
   try {
     const data: AddProductInputDataType = req.body;
@@ -105,6 +184,8 @@ const getAllProducts = async (req: Request, res: Response) => {
 }
 
 export {
+  markDelivered,
+  getAllOrders,
   addProduct,
   updateProduct,
   deleteProduct,

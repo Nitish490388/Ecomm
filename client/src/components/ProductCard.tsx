@@ -37,7 +37,6 @@ export const ProductCard: React.FC<{ product: productType }> = ({ product }) => 
           </div>
         </div>
       </div>
-
     </div>
   );
 };

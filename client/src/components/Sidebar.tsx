@@ -8,7 +8,7 @@ const Sidebar = () => {
   const sidebarItems = [
     {
       text: "Dashboard",
-      link: "/admin/allProducts",
+      link: "/admin/dashboard",
       icon: <RiHomeGearLine />
     },
     {
@@ -23,7 +23,7 @@ const Sidebar = () => {
     },
     {
       text: "Orders",
-      link: "/admin/appProducts",
+      link: "/admin/allOrders",
       icon: <LuFileSpreadsheet />
     },
     {
@@ -34,7 +34,7 @@ const Sidebar = () => {
   ];
   return (
     <div className="w-full h-full overflow-auto">
-      <div className="border-2  border-yellow-300">
+      <div className="">
         <ul className="w-[90%] flex flex-col space-y-5 p-5 font-semibold text-muted-foreground font-sans tracking-widest	">
           {
             sidebarItems.map((item) => (

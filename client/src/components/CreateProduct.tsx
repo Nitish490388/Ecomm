@@ -123,9 +123,9 @@ const CreateProduct = () => {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Categories</SelectLabel>
-                      <SelectItem onChange={handleChange} value="homedecor">Home Decor</SelectItem>
-                      <SelectItem onChange={handleChange} value="traditional">Traditional</SelectItem>
-                      <SelectItem onChange={handleChange} value="triad">Triad</SelectItem>
+                      <SelectItem onChange={handleChange} value="homedecor">T shirts</SelectItem>
+                      <SelectItem onChange={handleChange} value="traditional">Shirts</SelectItem>
+                      <SelectItem onChange={handleChange} value="Trousers">Triad</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

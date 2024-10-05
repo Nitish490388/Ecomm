@@ -1,6 +1,6 @@
 
 // import axiosClient from "@/utills/axiosClient";
-import { allProductsQuerry } from "@/store/productState";
+import { allProductsQuerry } from "@/store/adminAppState";
 import {
   useRecoilValueLoadable
 } from "recoil"

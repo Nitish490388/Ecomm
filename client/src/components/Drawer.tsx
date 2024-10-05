@@ -21,7 +21,7 @@ function Drawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
       </div>
       <div className="w-full h-full">
         <ul className="flex  flex-col gap-3 items-start pl-10 justify-center w-full  mt-20">
-          <li className="btn-primary text-xl list-item ">
+          {/* <li className="btn-primary text-xl list-item ">
             <Link to="/signup" onClick={onClose}>
               Signup
             </Link>
@@ -30,10 +30,14 @@ function Drawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
             <Link to="/signin" onClick={onClose}>
               Signin
             </Link>
+          </li> */}
+
+          <li className="btn-primary text-xl list-item">
+            <Link to="/" onClick={onClose}>Contact</Link>
           </li>
 
           <li className="btn-primary text-xl list-item">
-            <Link to="/">Contact</Link>
+            <Link to="/myorders" onClick={onClose}>My Orders</Link>
           </li>
           <li className="btn-primary text-xl list-item">
             <Link to="/">Projects</Link>

@@ -14,10 +14,10 @@ import "./config/cloudinaryConfig";
 dotenv.config({
   path: "./.env"
 });
-const PORT = process.env.PORT || 8001;
+
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8001;
 
 // middlewares
 app.use(
@@ -46,6 +46,6 @@ app.use("/api/v1/user", authRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/app", appRouter);
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`Server is listening on http://localhost:${PORT}`);
 });

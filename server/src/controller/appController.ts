@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { error, success } from "../utils/responseWrapper";
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary, ResponseCallback } from 'cloudinary';
 import { PrismaClient } from '@prisma/client'
 import { currentPrice } from "../utils/calculation";
 import { create } from "domain";
@@ -39,7 +39,70 @@ interface AddressDataType {
   altPhone: string;
 }
 
-const getUserDetails  = async (req:Request, res: Response) => {
+
+const cancelOrder = async (req: Request, res: Response) => {
+  try {
+    const orderId = req.params.id;
+    const order = await prisma.purchase.findFirst({
+      where: {
+        id: orderId
+      }
+    });
+
+    if(!order) {
+      return res.send(error(404, "Order not found"));
+    };
+
+    const updatedOrder = await prisma.purchase.update({
+      where: {
+        id: orderId
+      },
+      data: {
+        status: "CANCELLED"
+      }
+    });
+    
+    return res.send(success(200, { data: "Cancelled successfully " }));
+  } catch (err) {
+    console.log(err);
+    return res.send(error(500, "Error Happend"));
+  }
+}
+
+
+const getMyOrders = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId; 
+    const data = await prisma.purchase.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        product: {
+          include: {
+            picture: true,  // Fetch product images
+          },
+        },
+      },
+    });
+
+    const orderData = data.map((item) => ({
+      id: item.id,
+      productName: item.product.name,
+      imageUrl: item.product?.picture[0]?.url || '', 
+      price: Number(item.totalPrice), 
+      quantity: item.quantity,
+      status: item.status
+    }));
+
+    return res.status(201).send(success(201, orderData)); 
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(error(500, "An error occurred"));
+  }
+};
+
+const getUserDetails: any = async (req:Request, res: Response) => {
   try {
     const id = req.userId;
     const user = await prisma.user.findFirst({
@@ -135,9 +198,11 @@ const placeorder = async (req: Request, res: Response) => {
 }
 
 export {
+  cancelOrder,
   getUserDetails,
   getAllProducts,
   getSingleProduct,
   getFilteredProducts,
   placeorder,
+  getMyOrders,
 }

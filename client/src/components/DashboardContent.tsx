@@ -5,7 +5,7 @@ const DashboardContent = ({ children }: {
 }) => {
   return (
     <div className="w-full h-full flex ">
-      <div className="border border-green-500 w-[200px]">
+      <div className=" w-[200px]">
         <Sidebar />
       </div>
       <div className="flex-grow overflow-scroll">

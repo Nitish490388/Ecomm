@@ -22,6 +22,9 @@ interface productType {
   picture: pic[];
 }
 
+
+
+
 export const userAtom = atom({
   key: 'userAtom',
   default: {
