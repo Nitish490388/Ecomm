@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select"
 import { useState } from "react";
 import axiosClient from "../utills/axiosClient";
+import { toast } from "react-toastify";
 // import axios from "axios";
 
 interface FormDataType {
@@ -69,9 +70,10 @@ const CreateProduct = () => {
       const respond = await axiosClient.post("/api/v1/admin/addProduct", data);
       // const respond = await axios.post("http://localhost:8000/api/v1/admin/addProduct");
       console.log(respond);
+      toast.success("Product created successfully");
     } catch (error) {
       console.log(error);
-
+      toast.error("Failed in creating product");
     }
 
   };

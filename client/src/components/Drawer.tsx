@@ -32,9 +32,7 @@ function Drawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
             </Link>
           </li> */}
 
-          <li className="btn-primary text-xl list-item">
-            <Link to="/" onClick={onClose}>Contact</Link>
-          </li>
+         
 
           <li className="btn-primary text-xl list-item">
             <Link to="/myorders" onClick={onClose}>My Orders</Link>
@@ -42,16 +40,19 @@ function Drawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           <li className="btn-primary text-xl list-item">
             <Link to="/">Projects</Link>
           </li>
+          <li className="btn-primary text-xl list-item">
+            <Link to="/admin/dashboard" onClick={onClose}>Admin dashboard</Link>
+          </li>
 
           <div>
-            <Button
+            {/* <Button
               variant={"outline"}
               onClick={async () => {
                 onClose();
               }}
             >
               Logout
-            </Button>
+            </Button> */}
           </div>
 
           {/* Add other navigation links */}

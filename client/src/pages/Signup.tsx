@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '@/utills/axiosClient';
+import { toast } from 'react-toastify';
 
 // Define the shape of the form inputs
 interface SignupFormInputs {
@@ -40,7 +41,13 @@ const Signup: React.FC = () => {
       name, email, password, confirmPassword
     });
     console.log(response.data);
-    
+    if(response.data.stausCode === 200) {
+      toast.success("You are signed up successfully.");
+      navigate(-1);
+    }
+    else {
+      toast.error(response.data.message);
+    }
   };
 
   const password = watch("password");

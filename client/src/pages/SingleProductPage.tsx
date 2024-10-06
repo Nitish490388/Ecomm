@@ -7,6 +7,7 @@ import ImageGalleryMobile from "@/components/ImageGalleryMobile";
 import { currentPrice } from "@/utills/calculation";
 import { Button } from "@/components/ui/button";
 import ServiceImages from "@/components/ServiceImages";
+import { toast } from "react-toastify";
 
 interface pic {
   productId: string;
@@ -58,9 +59,9 @@ const SingleProductPage = () => {
   }
 
   const handleAddtoCart = () => {
-    console.log("added to cart");
     if (productLoadable.state === "hasValue")
       addItemToCart(productLoadable.contents.data);
+    toast.success("Added to cart!")
   }
 
   if (productLoadable.state === "loading") {

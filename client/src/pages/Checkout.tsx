@@ -14,6 +14,7 @@ import axiosClient from "@/utills/axiosClient";
 import { useUser } from "@/hooks/useUser";
 import { Card } from "@/components/ui/card";
 import ErrorMSG from "@/components/ErrorMSG";
+import { toast } from "react-toastify";
 
 
 interface pic {
@@ -87,13 +88,14 @@ const Checkout = () => {
         items: data,
         address: address
       }
-      const response = await axiosClient.post("/api/v1/app/placeorder", payload);
-      console.log(response.data.result);
+    await axiosClient.post("/api/v1/app/placeorder", payload);
+      toast.success("Order is placed!");
     } else {
     
       
       const errorMessage = result.error.errors.map((err) => err.message).join(", ");
       setErrorMSG(errorMessage);
+
     }
 
     

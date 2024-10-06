@@ -18,10 +18,25 @@ import RestrictAdmin from "./components/RestrictAdmin";
 import UserComponent from "./components/userComponent";
 import AdminAllOrders from "./pages/AdminAllOrders";
 import MyOrders from "./pages/MyOrders";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <Routes>
         <Route path="/try" element={<Trial />} />
         <Route element={<HomeLayouts />}>
@@ -37,6 +52,7 @@ function App() {
           </Route>
         </Route>
 
+        <Route element={<RestrictedUser />}>
         <Route element={<RestrictAdmin />}>
           <Route element={<DashboardLayout />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -44,6 +60,7 @@ function App() {
             <Route path="/admin/allProducts" element={<AdminAllProducts />} />
             <Route path="/admin/allOrders" element={<AdminAllOrders />} />
           </Route>
+        </Route>
         </Route>
         <Route path="*" element={<Notfound />}></Route>
       </Routes>

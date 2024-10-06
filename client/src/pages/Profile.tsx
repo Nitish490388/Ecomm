@@ -3,6 +3,7 @@ import { useUser } from "../hooks/useUser";
 import { Button } from "@/components/ui/button";
 import axiosClient from "@/utills/axiosClient";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const ProfilePage: React.FC = () => {
   const { user, loading, error } = useUser();
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const ProfilePage: React.FC = () => {
     const response = await axiosClient.post("/api/v1/user/signout");
     console.log(response);
     navigate("/");
-    
+    toast.success("You are logged out");
   }
 
   if (loading) {
