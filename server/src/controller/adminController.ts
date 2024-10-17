@@ -176,6 +176,8 @@ const getAllProducts = async (req: Request, res: Response) => {
         picture: true
       }
     });
+    // console.log(data[0]);
+    
     return res.send(success(200, { data }));
   } catch (err) {
     console.log(err);
@@ -183,7 +185,42 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 }
 
+const getPaginatedProducts = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 3;
+
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      prisma.product.findMany({
+        skip: skip,
+        take: limit,
+        include: {
+          picture: true,
+        },
+      }),
+      prisma.product.count(),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+    
+    return res.send(success(200, 
+      { data,
+      meta: {
+        total,
+        totalPages,
+        currentPage: page,
+        pageSize: limit,
+      }, }));
+  } catch (err) {
+    console.log(err);
+    return res.send(error(500, "Error Happend"));
+  }
+}
+
 export {
+  getPaginatedProducts,
   markDelivered,
   getAllOrders,
   addProduct,

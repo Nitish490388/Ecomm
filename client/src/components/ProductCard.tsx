@@ -1,3 +1,5 @@
+import { currentPrice } from "@/utills/calculation";
+
 interface pic {
   productId: string;
   publicId: string;
@@ -17,6 +19,8 @@ interface productType {
 }
 
 export const ProductCard: React.FC<{ product: productType }> = ({ product }) => {
+
+  const priceAfterDiscount = currentPrice(product.basePrice, product.discountPercentage);
   return (
     <div className="w-72 bg-accent text-accent-foreground shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
 
@@ -25,9 +29,9 @@ export const ProductCard: React.FC<{ product: productType }> = ({ product }) => 
         <span className="text-gray-400 mr-3 uppercase text-xs">{product.categoryName}</span>
         <p className="text-lg font-bold text-black truncate block capitalize">{product.name}</p>
         <div className="flex items-center">
-          <p className="text-lg font-semibold text-black cursor-auto my-3">${product.discountPercentage}</p>
+          <p className="text-lg font-semibold text-black cursor-auto my-3">INR: {priceAfterDiscount}</p>
           <del>
-            <p className="text-sm text-gray-600 cursor-auto ml-2">${product.basePrice}</p>
+            <p className="text-sm text-gray-600 cursor-auto ml-2">INR {product.basePrice}</p>
           </del>
           <div className="ml-auto">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">

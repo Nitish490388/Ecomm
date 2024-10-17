@@ -5,7 +5,8 @@ import {
   deleteProduct,
   getAllProducts,
   getAllOrders,
-  markDelivered
+  markDelivered,
+  getPaginatedProducts
 } from "../controller/adminController";
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.post("/updateProduct", updateProduct);
 router.post("/deleteproduct", deleteProduct);
 router.get("/getAllProducts", getAllProducts);
 router.get("/getAllOrders", getAllOrders);
+router.get("/getPaginatedProducts", getPaginatedProducts);
 
 export default router;
