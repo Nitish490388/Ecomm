@@ -1,27 +1,38 @@
 import React from "react";
-import { useUser } from "../hooks/useUser";
 import { Button } from "@/components/ui/button";
 import axiosClient from "@/utills/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useSetUser from "@/hooks/useSetUser";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { userAtom } from "@/store/appState";
+// import useResetUser from "@/hooks/useResetUser";
 const ProfilePage: React.FC = () => {
-  const { user, loading, error } = useUser();
+  // const { user, loading, error } = useUser();
   const navigate = useNavigate();
+  const setUser = useSetRecoilState(userAtom);
 
   const handleLogout = async() => {
-    const response = await axiosClient.post("/api/v1/user/signout");
-    console.log(response);
+     await axiosClient.post("/api/v1/user/signout");
+    // console.log(response);
+    // useResetUser();
+    setUser(
+      { name: '', email: '', role: '' }
+    ); 
     navigate("/");
     toast.success("You are logged out");
   }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  useSetUser();
+  const user = useRecoilValue(userAtom);
 
-  if (error) {
-    return <div>Error loading user details</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error loading user details</div>;
+  // }
 
   return (
     <div className="container mx-auto p-4">

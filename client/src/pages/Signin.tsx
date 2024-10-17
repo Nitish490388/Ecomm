@@ -1,19 +1,17 @@
-import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
-} from '@/components/ui/button';
-import { 
   Card,
   CardHeader,
   CardFooter,
   CardTitle,
-  CardContent
-} from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { useNavigate } from 'react-router-dom';
-import axiosClient from '@/utills/axiosClient';
+  CardContent,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
+import axiosClient from "@/utills/axiosClient";
 import { toast } from "react-toastify";
 
 // Define the shape of the form inputs
@@ -23,26 +21,28 @@ interface SigninFormInputs {
 }
 
 const Signin: React.FC = () => {
+
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm<SigninFormInputs>();
 
-  const onSubmit: SubmitHandler<SigninFormInputs> = async(data) => {
-    const {email, password} = data;
+  const onSubmit: SubmitHandler<SigninFormInputs> = async (data) => {
+    const { email, password } = data;
     const response = await axiosClient.post("/api/v1/user/signin", {
-     email, password, 
+      email,
+      password,
     });
 
     if (response.data.stausCode !== 200) {
       toast.error(response.data.message);
     } else {
-      console.log(response.data.stausCode); 
+      console.log(response.data.stausCode);
+      
       toast.success("You are logged in.");
       navigate(-1);
-
     }
   };
 
@@ -60,12 +60,12 @@ const Signin: React.FC = () => {
               <Input
                 id="email"
                 type="email"
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
                     value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                    message: 'Enter a valid email address'
-                  }
+                    message: "Enter a valid email address",
+                  },
                 })}
               />
               {errors.email && (
@@ -79,16 +79,18 @@ const Signin: React.FC = () => {
               <Input
                 id="password"
                 type="password"
-                {...register('password', {
-                  required: 'Password is required',
+                {...register("password", {
+                  required: "Password is required",
                   minLength: {
                     value: 6,
-                    message: 'Password must be at least 6 characters'
-                  }
+                    message: "Password must be at least 6 characters",
+                  },
                 })}
               />
               {errors.password && (
-                <p className="text-red-500 text-sm">{errors.password.message}</p>
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -102,9 +104,15 @@ const Signin: React.FC = () => {
         </CardContent>
         <CardFooter>
           <div className="text-center text-sm text-gray-500">
-            Already have an account? <span onClick={() => {
-              navigate("/signup")
-            }} className="text-blue-500">Login</span>
+            Already have an account?{" "}
+            <span
+              onClick={() => {
+                navigate("/signup");
+              }}
+              className="text-blue-500"
+            >
+              Login
+            </span>
           </div>
         </CardFooter>
       </Card>
@@ -113,3 +121,13 @@ const Signin: React.FC = () => {
 };
 
 export default Signin;
+
+
+// const userLoadable = useRecoilValueLoadable(getUserQuerry);
+//       if (userLoadable.state === 'hasValue') {
+//         const user = userLoadable.contents.data;
+//         setUser({
+//           name: user?.name as string,
+//           email: user?.email as string,
+//           role: user?.role as string,
+//         });
