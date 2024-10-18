@@ -95,6 +95,7 @@ const CreateProduct = () => {
 
   return (
     <div className="w-ful overflow-auto">
+       
       <Card className="w-full md:w-[60%] mx-auto mt-3">
         <CardHeader>
           <CardTitle>Add a Product</CardTitle>

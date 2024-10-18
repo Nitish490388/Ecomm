@@ -1,38 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import axiosClient from "@/utills/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useSetUser from "@/hooks/useSetUser";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userAtom } from "@/store/appState";
-// import useResetUser from "@/hooks/useResetUser";
+
+import useLogout from "@/hooks/useLogout";
+import { useUser } from "@/hooks/useUser";
+
 const ProfilePage: React.FC = () => {
-  // const { user, loading, error } = useUser();
   const navigate = useNavigate();
-  const setUser = useSetRecoilState(userAtom);
+  const logout = useLogout();
 
-  const handleLogout = async() => {
-     await axiosClient.post("/api/v1/user/signout");
-    // console.log(response);
-    // useResetUser();
-    setUser(
-      { name: '', email: '', role: '' }
-    ); 
-    navigate("/");
-    toast.success("You are logged out");
+  const handleLogout = async () => {
+    try {
+      await axiosClient.post("/api/v1/user/signout");
+      logout();
+      navigate("/");
+      toast.success("You are logged out");
+    } catch (error) {
+      console.log("Error durinng logout" + error);
+    }
+  };
+
+  
+  const {user, loading, error} = useUser();
+
+  if(loading) {
+    return <div>Loading..</div>
   }
-
-  useSetUser();
-  const user = useRecoilValue(userAtom);
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error loading user details</div>;
-  // }
+  if(error) {
+    return <div>error-..</div>
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -45,10 +43,11 @@ const ProfilePage: React.FC = () => {
           <p>
             <strong>Email:</strong> {user.email}
           </p>
-          <Button variant={"outline"} onClick={handleLogout}>logout</Button>
+          <Button variant={"outline"} onClick={handleLogout}>
+            logout
+          </Button>
         </div>
       )}
-      
     </div>
   );
 };

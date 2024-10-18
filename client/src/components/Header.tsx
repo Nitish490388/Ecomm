@@ -19,7 +19,7 @@ const Header = () => {
     <nav className="w-screen flex items-center justify-between px-4 bg-secondary">
       <CiMenuBurger className="text-3xl" onClick={handleDrawerToggle} />
       <Drawer isOpen={isDrawerOpen} onClose={handleDrawerToggle} />
-      <h3>Logo</h3>
+      <h3 onClick={() => navigate("/")} className="text-primary font-bold cursor-pointer">Logo</h3>
       <div className="flex items-center gap-4 text-2xl md:text-3xl font-thin py-3 md:py-5">
         <CiUser onClick={() => {
           navigate("/profile");

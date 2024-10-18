@@ -1,12 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
-import { Button } from "./ui/button";
-import axiosClient from "@/utills/axiosClient";
-import { useUser } from "@/hooks/useUser";
 
 function Drawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const navigate = useNavigate();
-
+  
   return (
     <div
       className={`fixed z-10 top-0 left-0 h-full w-full md:w-[300px] bg-secondary text-foreground transition-transform duration-300 transform ${
@@ -32,18 +28,20 @@ function Drawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
             </Link>
           </li> */}
 
-         
-
           <li className="btn-primary text-xl list-item">
-            <Link to="/myorders" onClick={onClose}>My Orders</Link>
+            <Link to="/signin">Signin</Link>
           </li>
           <li className="btn-primary text-xl list-item">
-            <Link to="/">Projects</Link>
-          </li>
-          <li className="btn-primary text-xl list-item">
-            <Link to="/admin/dashboard" onClick={onClose}>Admin dashboard</Link>
+            <Link to="/signup">Signup</Link>
           </li>
 
+          <li className="btn-primary text-xl list-item">
+            <Link to="/myorders" onClick={onClose}>
+              My Orders
+            </Link>
+          </li>
+
+          
           <div>
             {/* <Button
               variant={"outline"}

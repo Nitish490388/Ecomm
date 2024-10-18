@@ -3,6 +3,7 @@ import { useRecoilValueLoadable } from "recoil";
 import { appProductsQuerry } from "@/store/appState";
 import { ProductCard } from "@/components/ProductCard";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 interface pic {
   productId: string;
@@ -45,6 +46,9 @@ const Home = () => {
 
   return (
     <section id="Projects" className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+      <Helmet>
+        <title>Home - Ecomm</title>
+      </Helmet>
       {products.map((product, index) => (
         <div key={index} onClick={() => handleProductClick(product.id)}>
           <ProductCard product={product} />

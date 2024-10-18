@@ -25,13 +25,9 @@ interface productType {
 
 
 
-export const userAtom = atom({
+export const userAtom = atom<{ name: string; email: string; role: string } | null>({
   key: 'userAtom',
-  default: {
-    name: "",
-    email: "",
-    role: ""
-  }, 
+  default: null, 
 });
 
 export const getUserQuerry = selector({

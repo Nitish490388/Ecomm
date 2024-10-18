@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "@/utills/axiosClient";
 import { toast } from "react-toastify";
+import useSetUser from "@/hooks/useSetUser";
 
 // Define the shape of the form inputs
 interface SigninFormInputs {
@@ -39,10 +40,8 @@ const Signin: React.FC = () => {
     if (response.data.stausCode !== 200) {
       toast.error(response.data.message);
     } else {
-      console.log(response.data.stausCode);
-      
       toast.success("You are logged in.");
-      navigate(-1);
+      navigate("/");
     }
   };
 

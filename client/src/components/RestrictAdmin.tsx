@@ -1,23 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useUser } from "@/hooks/useUser";
+import { useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { getUserQuerry, userAtom } from "@/store/appState";
+import useSetUser from "@/hooks/useSetUser";
+
 
 const RestrictAdmin = () => {
   const navigate = useNavigate();
-  const { user, loading, error } = useUser();
+
+  const isUserLoaded = useSetUser();
+  const user = useRecoilValue(userAtom);
 
   useEffect(() => {
-    // Redirect if the user is not an admin and after loading
-    if (!loading && user && user.role !== "ADMIN") {
-      navigate("/signin");
+    if(isUserLoaded) {
+      if (user?.role !== "ADMIN") {
+        navigate("/signin");
+      }
     }
-  }, [user, loading, navigate]); // Dependency array ensures effect runs when these values change
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  }, [ isUserLoaded, user, navigate]); 
+  
 
-  if (error) {
+  if (!user) {
     return <div>Error loading user details</div>;
   }
 

@@ -125,11 +125,11 @@ const AdminProducts = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
+              {/* <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(products.name)}
               >
                 Copy copping
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
               <DropdownMenuItem>Edit Product</DropdownMenuItem>
               <DropdownMenuItem>Delete Product</DropdownMenuItem>

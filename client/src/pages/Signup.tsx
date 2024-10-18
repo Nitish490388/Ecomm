@@ -42,6 +42,7 @@ const Signup: React.FC = () => {
     });
     console.log(response.data);
     if(response.data.stausCode === 200) {
+      
       toast.success("You are signed up successfully.");
       navigate(-1);
     }

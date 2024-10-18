@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getUserQuerry, userAtom } from "@/store/appState";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 
 const useSetUser = () => {
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
   const setUser = useSetRecoilState(userAtom);
   const userLoadable = useRecoilValueLoadable(getUserQuerry);
 
@@ -14,8 +15,11 @@ const useSetUser = () => {
         email: user?.email ?? '',
         role: user?.role ?? '',
       });
+      setIsUserLoaded(true);
     }
   }, [userLoadable, setUser]);
+
+  return isUserLoaded;
 };
 
 export default useSetUser;
