@@ -15,13 +15,12 @@ import {
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {  useState } from "react";
+import { useState } from "react";
 
 const AdminProducts = () => {
-
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const limit = 3; 
-  
+  const limit = 3;
+
   const handlePrev = () => {
     setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
   };
@@ -30,15 +29,9 @@ const AdminProducts = () => {
     setCurrentPage((prev) => prev + 1);
   };
 
-  const productsLoadable =  useRecoilValueLoadable(PaginatedProductsQuery({ page: currentPage, limit }));
-  
-  
-  if(productsLoadable.state == "hasValue") {
-    // console.log(productsLoadable.contents);
-    // setCurrentPage(productsLoadable.contents.meta.currentPage);
-    // setTotalPage(productsLoadable.contents.meta.totalPages);
-  }
-  // const productsLoadable = useRecoilValueLoadable(allProductsQuerry);
+  const productsLoadable = useRecoilValueLoadable(
+    PaginatedProductsQuery({ page: currentPage, limit })
+  );
 
   if (productsLoadable.state == "loading") return <div>Loading...</div>;
 
@@ -148,24 +141,35 @@ const AdminProducts = () => {
   ];
   return (
     <div className="bg-background text-foreground">
-      <h1 className="font-bold bg-accent text-2xl text-accent-foreground p-4">
-        Products
-      </h1>
+      <div className="text-accent-foreground p-4">
+        <h1 className="font-bold bg-accent text-2xl p-4">Products</h1>
+      </div>
       <div>
         <DataTable columns={columns} data={products} />
       </div>
       <div className="w-full flex justify-end ">
-      <div className="w-[350px] flex items-center justify-between mr-24 mt-2">
-        <Button variant="outline" onClick={handlePrev} disabled={currentPage === 1}>prev</Button>
-        <span>Page: {currentPage}</span>
-        <Button variant="outline" onClick={handleNext} disabled={products.length < limit}>next</Button>
-        <div>Total Pages:{productsLoadable.contents.meta.totalPages}</div>
+        <div className="w-[350px] flex items-center justify-between mr-24 mt-2">
+          <Button
+            variant="outline"
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+          >
+            prev
+          </Button>
+          <span>Page: {currentPage}</span>
+          <Button
+            variant="outline"
+            onClick={handleNext}
+            disabled={products.length < limit}
+          >
+            next
+          </Button>
+          <div>Total Pages:{productsLoadable.contents.meta.totalPages}</div>
+        </div>
       </div>
-      </div>
-      <div className="h-[300px]"></div>
+      <div className="h-[10px]"></div>
     </div>
   );
 };
-
 
 export default AdminProducts;

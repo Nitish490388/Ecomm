@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import { error, success } from "../utils/responseWrapper";
 import { v2 as cloudinary } from 'cloudinary';
 import { PrismaClient } from '@prisma/client'
+import { ParsedQs } from 'qs';
 
 const prisma = new PrismaClient();
 
@@ -185,10 +186,12 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 }
 
+
 const getPaginatedProducts = async (req: Request, res: Response) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 3;
+    const search = req.query.search || "";
 
     const skip = (page - 1) * limit;
 
